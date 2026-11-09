@@ -15,9 +15,9 @@ A plataforma consolida dados de **sensores**, **bases públicas** e **registros 
 
 ## Tecnologias Utilizadas
 
-* **Backend (Spring Boot 3.3):** Java 17, Spring Data JPA, Spring Validation, Spring Actuator, Banco H2 (persistência local em arquivo).
-* **Frontend Mobile (React Native):** JavaScript/TypeScript, Expo, React Navigation, Axios.
-* **Inteligência & Análise:** Algoritmo de ponderação e score de priorização de riscos baseado em severidade, localização e confiabilidade da fonte.
+- **Backend (Spring Boot 3.3):** Java 17, Spring Data JPA, Spring Validation, Spring Actuator, Banco H2 (persistência local em arquivo).
+- **Frontend Mobile (React Native):** JavaScript/TypeScript, Expo, React Navigation, Axios.
+- **Inteligência & Análise:** Algoritmo de ponderação e score de priorização de riscos baseado em severidade, localização e confiabilidade da fonte.
 
 ---
 
@@ -36,3 +36,91 @@ urban-risk-platform/
 │   │   └── config/           # Configurações do sistema (Clock/Relógio)
 │   └── src/test/             # Testes unitários e de integração
 └── mobile/                   # Aplicativo React Native (Expo)
+```
+
+---
+
+## Regras de Negócio & Conformidade
+
+1. **Nível de Confiança por Origem:**
+   - **SENSOR:** Alta confiança (*High*).
+   - **BASE_PUBLICA:** Média confiança (*Medium*).
+   - **REGISTRO_COMUNITARIO:** Baixa confiança (*Low*).
+
+2. **Privacidade e LGPD:**
+   - Registros comunitários não armazenam nome, contato, IP ou qualquer identificador pessoal do morador, garantindo total anonimato e proteção aos dados sensíveis.
+
+3. **Recurso de IA e Priorização de Alertas:**
+   - O motor de decisão calcula o score de emergência através do cruzamento entre a gravidade informada, o nível de confiança da fonte e a janela temporal, ordenando a exibição dos alertas de forma prioritária no aplicativo.
+
+---
+
+## Como Executar o Projeto
+
+### Pré-requisitos
+
+- Java JDK 17 instalado.
+- Node.js (v18+) e gerenciador `npm` ou `yarn`.
+- Expo Go no dispositivo móvel ou um emulador (Android Studio / Xcode).
+
+### 1. Executando o Backend (Spring Boot)
+
+1. Entre no diretório do backend:
+   ```bash
+   cd backend
+   ```
+
+2. Execute a suíte de testes automatizados:
+   ```bash
+   mvn test
+   ```
+
+3. Inicie o servidor Spring Boot:
+   ```bash
+   mvn spring-boot:run
+   ```
+   *A API estará disponível em `http://localhost:8080` e os dados serão mantidos em `./backend/data`.*
+
+4. **Verificação de Saúde (Healthcheck):**
+   - Endpoint: `GET http://localhost:8080/actuator/health`
+
+### 2. Executando o Aplicativo Mobile (React Native)
+
+1. Em um novo terminal, entre na pasta do aplicativo:
+   ```bash
+   cd mobile
+   ```
+
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+3. Inicie o servidor de desenvolvimento do Expo:
+   ```bash
+   npx expo start
+   ```
+
+4. Abra o app no dispositivo físico escaneando o QR Code pelo **Expo Go**, ou pressione `a` (Android) / `i` (iOS) para executar no emulador.
+
+---
+
+## Demonstração e Resiliência Offline
+
+Durante a apresentação da Global Solution, a integração demonstra o tratamento de queda e reconexão do serviço:
+
+1. **Modo Conectado:** O aplicativo consome a API REST e atualiza a lista e o mapa de eventos em tempo real.
+2. **Desconexão (Backend Parado):** Ao interromper a API Spring Boot (`Ctrl + C`), o aplicativo detecta a inacessibilidade do endpoint `/actuator/health` e exibe um alerta intuitivo de falta de comunicação, **sem travar a aplicação**.
+3. **Reconexão:** Ao reiniciar o servidor, o aplicativo restabelece a conexão automaticamente e recarrega os dados atualizados.
+
+---
+
+## Integrantes do Grupo
+
+Projeto desenvolvido para a **Global Solution** da disciplina **Advanced Programming And Mobile Dev**, ministrada pela **Prof.ª Hete Caetano dos Santos**.
+
+| Nome | RM | Turma | E-mail |
+| :--- | :---: | :---: | :--- |
+| Felipe Pinheiro Sombra | 559167 | 3ECA | [RM559167@fiap.com.br](mailto:RM559167@fiap.com.br) |
+| Fernando de Freitas Carvalho | 555194 | 3ECR | [RM555194@fiap.com.br](mailto:RM555194@fiap.com.br) |
+| Nicolas Alves dos Santos | 558993 | 3ECR | [RM558993@fiap.com.br](mailto:RM558993@fiap.com.br) |
