@@ -107,7 +107,7 @@ urban-risk-platform/
 
 ## Integrantes do Grupo
 
-Projeto desenvolvido para a **Global Solution** da disciplina **Advanced Programming And Mobile Dev**, ministrada pela **Prof.ª Hete Caetano dos Santos**.
+Projeto desenvolvido para a **Global Solution** da disciplina **Advanced Programming And Mobile Dev**, ministrada pelo **Prof. Hete Caetano dos Santos**.
 
 | Nome | RM | Turma | E-mail |
 | :--- | :---: | :---: | :--- |
