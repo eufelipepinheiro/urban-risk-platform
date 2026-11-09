@@ -105,16 +105,6 @@ urban-risk-platform/
 
 ---
 
-## Demonstração e Resiliência Offline
-
-Durante a apresentação da Global Solution, a integração demonstra o tratamento de queda e reconexão do serviço:
-
-1. **Modo Conectado:** O aplicativo consome a API REST e atualiza a lista e o mapa de eventos em tempo real.
-2. **Desconexão (Backend Parado):** Ao interromper a API Spring Boot (`Ctrl + C`), o aplicativo detecta a inacessibilidade do endpoint `/actuator/health` e exibe um alerta intuitivo de falta de comunicação, **sem travar a aplicação**.
-3. **Reconexão:** Ao reiniciar o servidor, o aplicativo restabelece a conexão automaticamente e recarrega os dados atualizados.
-
----
-
 ## Integrantes do Grupo
 
 Projeto desenvolvido para a **Global Solution** da disciplina **Advanced Programming And Mobile Dev**, ministrada pela **Prof.ª Hete Caetano dos Santos**.
