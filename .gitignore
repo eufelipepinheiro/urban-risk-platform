@@ -1,0 +1,8 @@
+backend/target/
+backend/data/
+node_modules/
+.expo/
+.idea/
+.vscode/
+*.iml
+.DS_Store
