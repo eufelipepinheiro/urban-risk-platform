@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { TIPOS_DE_EVENTO } from '../api/tipos';
 import type { NivelPrioridade } from '../api/tipos';
+import { AvisoDeNotificacoesDesativadas } from '../componentes/AvisoDeNotificacoesDesativadas';
 import { CartaoDeAlerta } from '../componentes/CartaoDeAlerta';
 import { CartaoDeResumo } from '../componentes/CartaoDeResumo';
 import { EstadoDeCarregamento } from '../componentes/EstadoDeCarregamento';
@@ -15,6 +16,7 @@ import { useAgora } from '../hooks/useAgora';
 import { useAlertas } from '../hooks/useAlertas';
 import { useAtualizacaoManual } from '../hooks/useAtualizacaoManual';
 import type { NavegacaoDasAbas } from '../navegacao/tipos';
+import { useNotificacoesNegadas } from '../notificacoes/useNotificacoesNegadas';
 import { ALTURA_MINIMA_DE_TOQUE, cores } from '../tema/cores';
 import { resumirAlertas } from '../utils/resumo';
 import { ROTULO_TIPO } from '../utils/rotulos';
@@ -27,6 +29,7 @@ export function PainelTela() {
   const consulta = useAlertas();
   const agora = useAgora(INTERVALO_DE_RELOGIO_MS);
   const { atualizando, aoAtualizar } = useAtualizacaoManual(consulta.refetch);
+  const notificacoesNegadas = useNotificacoesNegadas();
   const resumo = useMemo(() => resumirAlertas(consulta.data ?? []), [consulta.data]);
 
   if (consulta.isPending) {
@@ -46,8 +49,9 @@ export function PainelTela() {
       <IndicadorDeAtualizacao
         atualizadoEm={consulta.dataUpdatedAt}
         buscando={consulta.isFetching}
-        falhou={consulta.isError}
       />
+
+      {notificacoesNegadas && <AvisoDeNotificacoesDesativadas />}
 
       <Text accessibilityRole="header" style={estilos.secao}>
         Alertas por prioridade

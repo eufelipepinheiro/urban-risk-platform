@@ -50,7 +50,6 @@ export function EventosTela() {
           <IndicadorDeAtualizacao
             atualizadoEm={consulta.dataUpdatedAt}
             buscando={consulta.isFetching}
-            falhou={consulta.isError}
           />
           <FiltroDeOpcoes
             rotuloDoGrupo="Filtrar eventos por tipo"

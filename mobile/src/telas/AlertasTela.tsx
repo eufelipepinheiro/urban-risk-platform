@@ -49,7 +49,6 @@ export function AlertasTela() {
           <IndicadorDeAtualizacao
             atualizadoEm={consulta.dataUpdatedAt}
             buscando={consulta.isFetching}
-            falhou={consulta.isError}
           />
           <FiltroDeOpcoes
             rotuloDoGrupo="Filtrar alertas por tipo"

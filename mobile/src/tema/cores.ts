@@ -9,6 +9,7 @@ export const cores = {
   primaria: '#0B4F8A',
   sobrePrimaria: '#FFFFFF',
   erro: '#8C1D18',
+  sucesso: '#1B5E20',
 };
 
 export const coresDePrioridade: Record<NivelPrioridade, { texto: string; fundo: string }> = {
