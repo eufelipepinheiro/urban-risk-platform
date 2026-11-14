@@ -6,3 +6,5 @@ node_modules/
 .vscode/
 *.iml
 .DS_Store
+mobile/dist/
+.env

@@ -13,6 +13,7 @@ import br.com.urbanrisk.domain.OrigemDado;
 import br.com.urbanrisk.domain.TipoEvento;
 import br.com.urbanrisk.repository.EventoRepository;
 import java.time.Clock;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.Optional;
@@ -81,6 +82,14 @@ class EventoServiceTest {
         assertThatThrownBy(() -> servico.buscarPorId(99L))
                 .isInstanceOf(EventoNaoEncontradoException.class)
                 .hasMessageContaining("99");
+    }
+
+    @Test
+    void removeEventosAnterioresAoPeriodoDeRetencao() {
+        Instant limite = AGORA.minus(Duration.ofDays(30));
+        when(repositorio.removerOcorridosAntesDe(limite)).thenReturn(5);
+
+        assertThat(servico.removerEventosAnterioresA(Duration.ofDays(30))).isEqualTo(5);
     }
 
     private void repositorioDevolveEntidadeSalva() {

@@ -16,6 +16,7 @@ public class IngestaoService {
 
     private static final String FONTE_COMUNITARIA = "Registro comunitário";
     private static final Locale PORTUGUES_BRASIL = Locale.forLanguageTag("pt-BR");
+    private static final int CASAS_DECIMAIS_DA_LOCALIZACAO_COMUNITARIA = 3;
 
     private final EventoService eventos;
 
@@ -48,8 +49,8 @@ public class IngestaoService {
                 OrigemDado.REGISTRO_COMUNITARIO,
                 FONTE_COMUNITARIA,
                 registro.gravidade(),
-                registro.latitude(),
-                registro.longitude(),
+                reduzirPrecisao(registro.latitude()),
+                reduzirPrecisao(registro.longitude()),
                 AnonimizadorDeTexto.anonimizar(registro.descricao()),
                 null));
     }
@@ -64,6 +65,12 @@ public class IngestaoService {
                 ocorrencia.longitude(),
                 ocorrencia.descricao(),
                 ocorrencia.ocorridoEm()));
+    }
+
+    // Três casas decimais (~110 m) localizam a ocorrência sem revelar o endereço exato de quem a registrou.
+    private double reduzirPrecisao(double coordenada) {
+        double escala = Math.pow(10, CASAS_DECIMAIS_DA_LOCALIZACAO_COMUNITARIA);
+        return Math.round(coordenada * escala) / escala;
     }
 
     private String descrever(LeituraDeSensor leitura) {

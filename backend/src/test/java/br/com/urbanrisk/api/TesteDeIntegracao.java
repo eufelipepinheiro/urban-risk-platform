@@ -11,7 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 // Todas as classes compartilham a mesma configuração, o que reaproveita o contexto do Spring entre elas.
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(properties = "spring.datasource.url=jdbc:h2:mem:urbanrisk-teste")
+@SpringBootTest(properties = {
+        "spring.datasource.url=jdbc:h2:mem:urbanrisk-teste",
+        "urbanrisk.seguranca.chave-sensores=" + ChavesDeTeste.SENSORES,
+        "urbanrisk.seguranca.chave-bases-publicas=" + ChavesDeTeste.BASES_PUBLICAS,
+        "urbanrisk.seguranca.chave-comunitario=" + ChavesDeTeste.COMUNITARIO
+})
 @AutoConfigureMockMvc
 @Transactional
 public @interface TesteDeIntegracao {

@@ -9,6 +9,7 @@ import br.com.urbanrisk.domain.OrigemDado;
 import br.com.urbanrisk.domain.TipoEvento;
 import br.com.urbanrisk.repository.EventoRepository;
 import java.time.Clock;
+import java.time.Duration;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -45,6 +46,11 @@ public class EventoService {
     @Transactional(readOnly = true)
     public Evento buscarPorId(Long id) {
         return repositorio.findById(id).orElseThrow(() -> new EventoNaoEncontradoException(id));
+    }
+
+    @Transactional
+    public int removerEventosAnterioresA(Duration retencao) {
+        return repositorio.removerOcorridosAntesDe(relogio.instant().minus(retencao));
     }
 
     private int limitarListagem(int limite) {

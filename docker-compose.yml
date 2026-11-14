@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: urbanrisk
+      POSTGRES_USER: urbanrisk
+      POSTGRES_PASSWORD: ${DB_SENHA:?defina a variável DB_SENHA}
+    volumes:
+      - dados-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U urbanrisk -d urbanrisk"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: ${PERFIL:-postgres}
+      DB_URL: jdbc:postgresql://db:5432/urbanrisk
+      DB_SENHA: ${DB_SENHA}
+      URBANRISK_SEGURANCA_CHAVE_SENSORES: ${CHAVE_SENSORES:-}
+      URBANRISK_SEGURANCA_CHAVE_BASES_PUBLICAS: ${CHAVE_BASES_PUBLICAS:-}
+      URBANRISK_SEGURANCA_CHAVE_COMUNITARIO: ${CHAVE_COMUNITARIO:-}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+volumes:
+  dados-db:
